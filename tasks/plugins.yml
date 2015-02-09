@@ -27,6 +27,21 @@
 #  - { name: 'facet-script', url: 'http://dl.bintray.com/content/imotov/elasticsearch-plugins/elasticsearch-facet-script-1.1.2.zip' }
 
 # Loop though elasticsearch_plugins and install them
+- name: Removing Plugins by Name
+  action: >
+    shell bin/plugin -remove {{ item.name }} --silent
+    chdir={{ elasticsearch_home_dir }}
+  when: item.url is not defined
+  with_items: elasticsearch_plugins
+  ignore_errors: yes
+- name: Removing Plugins by URL
+  action: >
+    shell bin/plugin -remove {{ item.name }} -url {{ item.url }} --silent
+    chdir={{ elasticsearch_home_dir }}
+  when: item.url is defined
+  with_items: elasticsearch_plugins
+  ignore_errors: yes
+
 - name: Installing Plugins by Name
   action: >
     shell bin/plugin -install {{ item.name }}

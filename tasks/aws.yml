@@ -13,6 +13,10 @@
 # - elasticsearch_plugin_aws_secret_key
 # - elasticsearch_plugin_aws_region
 
+- name: Remove Existing AWS Plugin
+  action: >
+    shell bin/plugin -remove elasticsearch/elasticsearch-cloud-aws/{{ elasticsearch_plugin_aws_version }} --silent
+    chdir={{ elasticsearch_home_dir }}
 
 - name: Installing AWS Plugin
   action: >
