@@ -602,3 +602,8 @@ script.disable_dynamic: {{ elasticsearch_script_disable_dynamic }}
 {% if elasticsearch_http_cors_enabled is defined %}
 http.cors.enabled: {{ elasticsearch_http_cors_enabled }}
 {% endif %}
+
+################################### BATCH SETTINGS ###################################
+threadpool.bulk.type: fixed
+threadpool.bulk.size: 8                 # availableProcessors
+threadpool.bulk.queue_size: 500
